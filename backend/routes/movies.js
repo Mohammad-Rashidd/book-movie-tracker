@@ -1,67 +1,70 @@
 import express from "express";
-import Movie from "../models/Movie.js";
-
 const router = express.Router();
+import Movie from "../models/Movie.js";
+import auth from "../middleware/authMiddleware.js";
 
-// GET all movies
-router.get("/", async (req, res) => {
+// Get all movies for logged-in user
+router.get("/", auth, async (req, res) => {
   try {
-    const movies = await Movie.find();
+    const movies = await Movie.find({ user: req.userId });
     res.json(movies);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching movies", error });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
-// GET a single movie by ID
-router.get("/:id", async (req, res) => {
+// ✅ Get a single movie by ID
+router.get("/:id", auth, async (req, res) => {
   try {
-    const movie = await Movie.findById(req.params.id);
+    const movie = await Movie.findOne({ _id: req.params.id, user: req.userId });
     if (!movie) return res.status(404).json({ message: "Movie not found" });
     res.json(movie);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching movie", error });
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
   }
 });
 
-// POST a new movie
-router.post("/", async (req, res) => {
+// Add a movie
+router.post("/", auth, async (req, res) => {
   try {
-    const newMovie = new Movie(req.body);
-    await newMovie.save();
-    res.status(201).json(newMovie);
-  } catch (error) {
-    res.status(400).json({ message: "Error creating movie", error });
+    const { title, director, year } = req.body;
+    const movie = new Movie({ title, director, year, user: req.userId });
+    await movie.save();
+    res.status(201).json(movie);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
-// PUT (update) a movie
-router.put("/:id", async (req, res) => {
+// ✅ Update a movie
+router.put("/:id", auth, async (req, res) => {
   try {
-    const updatedMovie = await Movie.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-      }
+    const { title, director, year } = req.body;
+    const updatedMovie = await Movie.findOneAndUpdate(
+      { _id: req.params.id, user: req.userId },
+      { title, director, year },
+      { new: true }
     );
     if (!updatedMovie)
       return res.status(404).json({ message: "Movie not found" });
     res.json(updatedMovie);
-  } catch (error) {
-    res.status(400).json({ message: "Error updating movie", error });
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
   }
 });
 
-// DELETE a movie
-router.delete("/:id", async (req, res) => {
+// ✅ Delete a movie
+router.delete("/:id", auth, async (req, res) => {
   try {
-    const deletedMovie = await Movie.findByIdAndDelete(req.params.id);
+    const deletedMovie = await Movie.findOneAndDelete({
+      _id: req.params.id,
+      user: req.userId,
+    });
     if (!deletedMovie)
       return res.status(404).json({ message: "Movie not found" });
     res.json({ message: "Movie deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Error deleting movie", error });
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
   }
 });
 
