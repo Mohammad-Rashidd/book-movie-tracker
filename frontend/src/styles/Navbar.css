@@ -1,0 +1,35 @@
+/* frontend/src/styles/Navbar.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1e90ff;
+  color: white;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.nav-links a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+.nav-links button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nav-links button:hover,
+.nav-links a:hover {
+  opacity: 0.8;
+}

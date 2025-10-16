@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import API from "../api/api";
 
 const Signup = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -10,11 +11,11 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.post("/auth/signup", { email, password });
+      await API.post("/auth/register", { username, email, password });
       alert("Signup successful! Please login.");
       navigate("/login");
     } catch (err) {
-      alert(err.response.data.message);
+      alert(err.response.data.error);
     }
   };
 
@@ -22,6 +23,13 @@ const Signup = () => {
     <div>
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
         <input
           type="email"
           placeholder="Email"

@@ -7,11 +7,20 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) setUser({ token }); // can add more user info after decoding token
+    const username = localStorage.getItem("username");
+    if (token && username) {
+      setUser({ token, username }); // now user has token and username
+    }
   }, []);
 
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

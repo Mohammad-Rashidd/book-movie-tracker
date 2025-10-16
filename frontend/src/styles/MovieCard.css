@@ -1,0 +1,27 @@
+/* frontend/src/styles/MovieCard.css */
+.movie-card {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-card h3 {
+  margin-bottom: 8px;
+  font-size: 18px;
+  color: #333;
+}
+
+.movie-card p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
