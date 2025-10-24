@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import PrivateRoute from "./components/PrivateRoute";
 
 import Navbar from "./components/Navbar";
 import LandingPage from "./pages/LandingPage";
