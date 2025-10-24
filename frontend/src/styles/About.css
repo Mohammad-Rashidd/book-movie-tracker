@@ -1,0 +1,56 @@
+.page {
+  max-width: 900px;
+  margin: 80px auto 40px auto;
+  padding: 20px 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  font-family: "Poppins", sans-serif;
+  transition: box-shadow 0.3s ease;
+}
+
+.page:hover {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+.page h1 {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #222;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.page h1::after {
+  content: "";
+  width: 70px;
+  height: 4px;
+  background-color: #0078ff;
+  display: block;
+  margin: 8px auto 0 auto;
+  border-radius: 5px;
+}
+
+.page p {
+  font-size: 1.1rem;
+  text-align: center;
+  color: #5a5a5a;
+  line-height: 1.7;
+  margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page {
+    padding: 15px 20px;
+  }
+
+  .page h1 {
+    font-size: 2rem;
+  }
+
+  .page p {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,80 @@
+.page {
+  max-width: 900px;
+  margin: 80px auto 40px auto;
+  padding: 30px 35px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  font-family: "Poppins", sans-serif;
+  transition: box-shadow 0.3s ease;
+}
+
+.page:hover {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+.page h1 {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #222;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.page h1::after {
+  content: "";
+  width: 70px;
+  height: 4px;
+  background-color: #0078ff;
+  display: block;
+  margin: 8px auto;
+  border-radius: 5px;
+}
+
+/* Content Text */
+.page p {
+  font-size: 1.1rem;
+  color: #555;
+  text-align: center;
+  line-height: 1.7;
+  margin-bottom: 15px;
+}
+
+/* Contact List */
+.page ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.page ul li {
+  margin: 8px 0;
+  font-size: 1.1rem;
+  color: #444;
+  padding: 10px;
+  border-radius: 6px;
+  background: #f5f9ff;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.page ul li:hover {
+  background: #e5f1ff;
+  transform: scale(1.03);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page {
+    padding: 20px 22px;
+  }
+
+  .page h1 {
+    font-size: 2rem;
+  }
+
+  .page p,
+  .page ul li {
+    font-size: 1rem;
+  }
+}

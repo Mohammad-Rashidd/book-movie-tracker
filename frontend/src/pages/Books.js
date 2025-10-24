@@ -2,12 +2,22 @@ import React, { useEffect, useState, useContext } from "react";
 import api from "../api/api";
 import { AuthContext } from "../context/AuthContext";
 import BookCard from "../components/BookCard";
+import "../styles/Books.css";
 
 const Books = () => {
   const { user } = useContext(AuthContext);
-  const [books, setBooks] = useState([]);
-  const [formData, setFormData] = useState({ title: "", author: "", year: "" });
 
+  const [books, setBooks] = useState([]);
+  const [formData, setFormData] = useState({
+    title: "",
+    author: "",
+    year: "",
+    status: "To Read",
+  });
+  const [search, setSearch] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
+
+  // Fetch books
   const fetchBooks = async () => {
     try {
       const res = await api.get("/books", {
@@ -23,9 +33,9 @@ const Books = () => {
     if (user) fetchBooks();
   }, [user]);
 
-  const handleChange = (e) => {
+  // Form handling
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,17 +44,74 @@ const Books = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       setBooks([...books, res.data]);
-      setFormData({ title: "", author: "", year: "" });
+      setFormData({
+        title: "",
+        author: "",
+        year: "",
+        status: "To Read",
+      });
     } catch (err) {
       console.error(err);
     }
   };
 
+  // Delete book
+  const handleDelete = async (id) => {
+    try {
+      await api.delete(`/books/${id}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      setBooks(books.filter((book) => book._id !== id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Filtered books
+  const filteredBooks = books.filter((book) => {
+    return (
+      (book.title.toLowerCase().includes(search.toLowerCase()) ||
+        book.author.toLowerCase().includes(search.toLowerCase())) &&
+      (filterStatus ? book.status === filterStatus : true)
+    );
+  });
+
   return (
     <div className="books-page">
-      <h1>Your Books</h1>
+      <h1>My Books</h1>
 
-      <form onSubmit={handleSubmit}>
+      {/* 📊 Stats */}
+      <div className="books-stats">
+        <p>Total: {books.length}</p>
+        <p>Read: {books.filter((b) => b.status === "Read").length}</p>
+        <p>
+          Currently Reading:{" "}
+          {books.filter((b) => b.status === "Reading").length}
+        </p>
+        <p>To Read: {books.filter((b) => b.status === "To Read").length}</p>
+      </div>
+
+      {/* 🔍 Search & Filter */}
+      <div className="books-controls">
+        <input
+          type="text"
+          placeholder="Search by title or author..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+        >
+          <option value="">All Status</option>
+          <option value="To Read">To Read</option>
+          <option value="Reading">Reading</option>
+          <option value="Read">Read</option>
+        </select>
+      </div>
+
+      {/* ➕ Add Book Form */}
+      <form className="add-book-form" onSubmit={handleSubmit}>
         <input
           type="text"
           name="title"
@@ -67,15 +134,25 @@ const Books = () => {
           placeholder="Year"
           value={formData.year}
           onChange={handleChange}
-          required
         />
+
+        <select name="status" value={formData.status} onChange={handleChange}>
+          <option value="To Read">To Read</option>
+          <option value="Reading">Reading</option>
+          <option value="Read">Read</option>
+        </select>
         <button type="submit">Add Book</button>
       </form>
 
+      {/* 📚 Book List */}
       <div className="book-list">
-        {books.map((book) => (
-          <BookCard key={book._id} book={book} />
-        ))}
+        {filteredBooks.length ? (
+          filteredBooks.map((book) => (
+            <BookCard key={book._id} book={book} onDelete={handleDelete} />
+          ))
+        ) : (
+          <p className="empty-state">No books found. Add your first book!</p>
+        )}
       </div>
     </div>
   );

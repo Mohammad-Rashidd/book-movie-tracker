@@ -1,17 +1,31 @@
-// frontend/src/components/BookCard.js
 import React from "react";
 import "../styles/BookCard.css";
 
-const BookCard = ({ book }) => {
+const BookCard = ({ book, onDelete }) => {
   return (
     <div className="book-card">
-      <h3>{book.title}</h3>
-      <p>
-        <strong>Author:</strong> {book.author}
-      </p>
-      <p>
-        <strong>Year:</strong> {book.year}
-      </p>
+      <div className="book-info">
+        <h3>{book.title}</h3>
+        <p>
+          <strong>Author:</strong> {book.author}
+        </p>
+        {book.year && (
+          <p>
+            <strong>Year:</strong> {book.year}
+          </p>
+        )}
+        <span
+          className={`status ${book.status.toLowerCase().replace(" ", "-")}`}
+        >
+          {book.status}
+        </span>
+      </div>
+
+      <div className="book-actions">
+        <button className="delete-btn" onClick={() => onDelete(book._id)}>
+          Delete
+        </button>
+      </div>
     </div>
   );
 };

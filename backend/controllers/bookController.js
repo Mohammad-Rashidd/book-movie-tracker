@@ -4,7 +4,8 @@ import Book from "../models/Book.js";
 // Get all books for logged-in user
 export const getBooks = async (req, res) => {
   try {
-    const books = await Book.find({ user: req.userId });
+    // Optional: sort by newest first
+    const books = await Book.find({ user: req.userId }).sort({ createdAt: -1 });
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: "Server error" });
@@ -14,11 +15,19 @@ export const getBooks = async (req, res) => {
 // Add a new book
 export const addBook = async (req, res) => {
   try {
-    const { title, author, year } = req.body;
-    const book = new Book({ title, author, year, user: req.userId });
+    const { title, author, year, description, status } = req.body;
+    const book = new Book({
+      title,
+      author,
+      year,
+      description,
+      status,
+      user: req.userId,
+    });
     await book.save();
     res.status(201).json(book);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -30,6 +39,7 @@ export const getBookById = async (req, res) => {
     if (!book) return res.status(404).json({ message: "Book not found" });
     res.json(book);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -37,14 +47,16 @@ export const getBookById = async (req, res) => {
 // Update book
 export const updateBook = async (req, res) => {
   try {
+    const { title, author, year, description, status } = req.body;
     const book = await Book.findOneAndUpdate(
       { _id: req.params.id, user: req.userId },
-      req.body,
+      { title, author, year, description, status },
       { new: true }
     );
     if (!book) return res.status(404).json({ message: "Book not found" });
     res.json(book);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -59,6 +71,7 @@ export const deleteBook = async (req, res) => {
     if (!book) return res.status(404).json({ message: "Book not found" });
     res.json({ message: "Book deleted" });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };

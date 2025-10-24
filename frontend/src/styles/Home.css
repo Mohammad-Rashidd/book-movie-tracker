@@ -1,17 +1,97 @@
 .home-page {
-  text-align: center;
-  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.home-actions button {
-  margin: 1rem;
-  padding: 0.8rem 1.2rem;
-  font-size: 1rem;
-  cursor: pointer;
+/* Welcome Section */
+.welcome-section h1 {
+  font-size: 2rem;
+  margin-bottom: 6px;
 }
-
-.home-info {
-  margin-top: 2rem;
-  font-size: 1rem;
+.welcome-section p {
   color: #555;
+  margin-bottom: 20px;
+}
+
+/* Quick Actions */
+.home-actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+.action-btn {
+  flex: 1;
+  text-align: center;
+  padding: 12px;
+  background-color: #1a5918;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+}
+.action-btn:hover {
+  background-color: #1e8320;
+}
+
+/* Stats Cards */
+.dashboard-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.stat-card {
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  padding: 16px;
+  flex: 1;
+  min-width: 220px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+}
+.stat-card h3 {
+  margin-bottom: 10px;
+  color: #222;
+}
+.stat-card p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+}
+
+/* Recently Added Section */
+.recent-section {
+  margin-top: 20px;
+}
+.recent-section h2 {
+  margin-bottom: 12px;
+  color: #333;
+}
+.recent-list {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.recent-card {
+  background-color: #f9f9f9;
+  padding: 12px;
+  border-radius: 10px;
+  flex: 1;
+  min-width: 200px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+.recent-card h4 {
+  margin-bottom: 4px;
+  font-size: 1rem;
+}
+.recent-card p {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 2px 0;
 }

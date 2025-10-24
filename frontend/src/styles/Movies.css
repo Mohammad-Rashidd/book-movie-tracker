@@ -1,0 +1,111 @@
+/* 🌟 General Page Styles */
+.movies-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: "Poppins", sans-serif;
+  color: #222;
+}
+
+/* 🎯 Page Heading */
+.movies-page h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 25px;
+  color: #105314;
+}
+
+/* 📊 Stats Section */
+.movies-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.movies-stats p {
+  font-weight: 600;
+  margin: 5px 10px;
+}
+
+/* 🔍 Controls Section */
+.movies-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.movies-controls input,
+.movies-controls select {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  flex: 1;
+  min-width: 180px;
+}
+
+/* ➕ Add Movie Form */
+.add-movie-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.add-movie-form input,
+.add-movie-form select {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.add-movie-form button {
+  grid-column: span 1;
+  padding: 12px 20px;
+  background: #115219;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-movie-form button:hover {
+  background: #0f7c20;
+  transform: translateY(-2px);
+}
+
+/* 🎬 Movie List */
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #777;
+  margin-top: 20px;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .movies-controls {
+    flex-direction: column;
+  }
+
+  .add-movie-form {
+    grid-template-columns: 1fr;
+  }
+
+  .movies-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+}

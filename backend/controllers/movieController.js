@@ -21,11 +21,17 @@ export const getMovieById = async (req, res) => {
   }
 };
 
-// Add a movie
+// Add a new movie
 export const addMovie = async (req, res) => {
   try {
-    const { title, director, year } = req.body;
-    const movie = new Movie({ title, director, year, user: req.userId });
+    const { title, director, year, status } = req.body;
+    const movie = new Movie({
+      title,
+      director,
+      year,
+      status: status || "To Watch",
+      user: req.userId,
+    });
     await movie.save();
     res.status(201).json(movie);
   } catch (err) {
@@ -36,10 +42,10 @@ export const addMovie = async (req, res) => {
 // Update a movie
 export const updateMovie = async (req, res) => {
   try {
-    const { title, director, year } = req.body;
+    const { title, director, year, status } = req.body;
     const updatedMovie = await Movie.findOneAndUpdate(
       { _id: req.params.id, user: req.userId },
-      { title, director, year },
+      { title, director, year, status },
       { new: true }
     );
     if (!updatedMovie)

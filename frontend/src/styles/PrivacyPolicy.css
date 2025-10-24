@@ -1,0 +1,77 @@
+.page {
+  max-width: 900px;
+  margin: 80px auto 40px auto;
+  padding: 35px 40px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  font-family: "Poppins", sans-serif;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Smooth fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page h1 {
+  font-size: 2.4rem;
+  font-weight: 600;
+  text-align: center;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+.page h1::after {
+  content: "";
+  width: 85px;
+  height: 4px;
+  background-color: #4b82ff;
+  display: block;
+  margin: 10px auto;
+  border-radius: 5px;
+}
+
+.page p {
+  font-size: 1.12rem;
+  color: #555;
+  line-height: 1.8;
+  margin: 15px 0;
+  text-align: justify;
+}
+
+/* Optional data section highlighting */
+.policy-box {
+  margin-top: 20px;
+  padding: 18px;
+  background: #f4f8ff;
+  border-left: 4px solid #4b82ff;
+  border-radius: 8px;
+}
+
+.policy-box strong {
+  color: #2a5bff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page {
+    padding: 25px 22px;
+    margin: 60px 15px;
+  }
+
+  .page h1 {
+    font-size: 2rem;
+  }
+
+  .page p {
+    font-size: 1rem;
+  }
+}
