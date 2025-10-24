@@ -55,6 +55,6 @@ A full-stack web application to manage and track your favorite **books** and **m
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/book-movie-tracker.git
+git clone https://github.com/Mohammad-Rashidd/book-movie-tracker.git
 cd book-movie-tracker
 ```
