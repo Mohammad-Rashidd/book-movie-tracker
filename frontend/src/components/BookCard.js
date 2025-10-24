@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/BookCard.css";
 
-const BookCard = ({ book, onDelete }) => {
+const BookCard = ({ book, onDelete, onEdit }) => {
   return (
     <div className="book-card">
       <div className="book-info">
@@ -22,6 +22,9 @@ const BookCard = ({ book, onDelete }) => {
       </div>
 
       <div className="book-actions">
+        <button className="edit-btn" onClick={() => onEdit(book)}>
+          Edit
+        </button>
         <button className="delete-btn" onClick={() => onDelete(book._id)}>
           Delete
         </button>

@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/MovieCard.css";
 
-const MovieCard = ({ movie, onDelete }) => {
+const MovieCard = ({ movie, onDelete, onEdit }) => {
   return (
     <div className="movie-card">
       <div className="movie-info">
@@ -22,6 +22,9 @@ const MovieCard = ({ movie, onDelete }) => {
       </div>
 
       <div className="movie-actions">
+        <button className="edit-btn" onClick={() => onEdit(movie)}>
+          Edit
+        </button>
         <button className="delete-btn" onClick={() => onDelete(movie._id)}>
           Delete
         </button>

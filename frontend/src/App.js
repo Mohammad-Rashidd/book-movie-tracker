@@ -42,15 +42,32 @@ function App() {
         />
 
         {/* 👤 User Pages (Protected) */}
-        <Route path="/home" element={user ? <Home /> : <Navigate to="/" />} />
+        <Route
+          path="/home"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/books"
-          element={user ? <Books /> : <Navigate to="/login" />}
+          element={
+            <PrivateRoute>
+              <Books />
+            </PrivateRoute>
+          }
         />
         <Route
           path="/movies"
-          element={user ? <Movies /> : <Navigate to="/login" />}
+          element={
+            <PrivateRoute>
+              <Movies />
+            </PrivateRoute>
+          }
         />
+
+        {/* 📝 Static Pages */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />

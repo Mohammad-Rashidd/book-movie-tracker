@@ -16,6 +16,7 @@ const Movies = () => {
   });
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
+  const [editingMovie, setEditingMovie] = useState(null);
 
   // Fetch movies
   const fetchMovies = async () => {
@@ -40,16 +41,23 @@ const Movies = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/movies", formData, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
-      setMovies([...movies, res.data]);
-      setFormData({
-        title: "",
-        director: "",
-        year: "",
-        status: "To Watch",
-      });
+      if (editingMovie) {
+        // Update movie
+        const res = await api.put(`/movies/${editingMovie._id}`, formData, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        setMovies(
+          movies.map((m) => (m._id === editingMovie._id ? res.data : m))
+        );
+        setEditingMovie(null);
+      } else {
+        // Add movie
+        const res = await api.post("/movies", formData, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        setMovies([...movies, res.data]);
+      }
+      setFormData({ title: "", director: "", year: "", status: "To Watch" });
     } catch (err) {
       console.error(err);
     }
@@ -65,6 +73,17 @@ const Movies = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  // Edit movie
+  const handleEdit = (movie) => {
+    setEditingMovie(movie);
+    setFormData({
+      title: movie.title,
+      director: movie.director,
+      year: movie.year,
+      status: movie.status,
+    });
   };
 
   // Filtered movies
@@ -107,7 +126,7 @@ const Movies = () => {
         </select>
       </div>
 
-      {/* ➕ Add Movie Form */}
+      {/* ➕ Add / Edit Movie Form */}
       <form className="add-movie-form" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -137,14 +156,21 @@ const Movies = () => {
           <option value="Watching">Watching</option>
           <option value="Watched">Watched</option>
         </select>
-        <button type="submit">Add Movie</button>
+        <button type="submit">
+          {editingMovie ? "Update Movie" : "Add Movie"}
+        </button>
       </form>
 
       {/* 🎬 Movie List */}
       <div className="movie-list">
         {filteredMovies.length ? (
           filteredMovies.map((movie) => (
-            <MovieCard key={movie._id} movie={movie} onDelete={handleDelete} />
+            <MovieCard
+              key={movie._id}
+              movie={movie}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+            />
           ))
         ) : (
           <p className="empty-state">No movies found. Add your first movie!</p>

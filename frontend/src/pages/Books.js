@@ -16,6 +16,7 @@ const Books = () => {
   });
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
+  const [editingBook, setEditingBook] = useState(null);
 
   // Fetch books
   const fetchBooks = async () => {
@@ -40,16 +41,21 @@ const Books = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/books", formData, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
-      setBooks([...books, res.data]);
-      setFormData({
-        title: "",
-        author: "",
-        year: "",
-        status: "To Read",
-      });
+      if (editingBook) {
+        // Update book
+        const res = await api.put(`/books/${editingBook._id}`, formData, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        setBooks(books.map((b) => (b._id === editingBook._id ? res.data : b)));
+        setEditingBook(null);
+      } else {
+        // Add new book
+        const res = await api.post("/books", formData, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        setBooks([...books, res.data]);
+      }
+      setFormData({ title: "", author: "", year: "", status: "To Read" });
     } catch (err) {
       console.error(err);
     }
@@ -65,6 +71,17 @@ const Books = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  // Edit book
+  const handleEdit = (book) => {
+    setEditingBook(book);
+    setFormData({
+      title: book.title,
+      author: book.author,
+      year: book.year,
+      status: book.status,
+    });
   };
 
   // Filtered books
@@ -110,7 +127,7 @@ const Books = () => {
         </select>
       </div>
 
-      {/* ➕ Add Book Form */}
+      {/* ➕ Add / Edit Book Form */}
       <form className="add-book-form" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -135,20 +152,26 @@ const Books = () => {
           value={formData.year}
           onChange={handleChange}
         />
-
         <select name="status" value={formData.status} onChange={handleChange}>
           <option value="To Read">To Read</option>
           <option value="Reading">Reading</option>
           <option value="Read">Read</option>
         </select>
-        <button type="submit">Add Book</button>
+        <button type="submit">
+          {editingBook ? "Update Book" : "Add Book"}
+        </button>
       </form>
 
       {/* 📚 Book List */}
       <div className="book-list">
         {filteredBooks.length ? (
           filteredBooks.map((book) => (
-            <BookCard key={book._id} book={book} onDelete={handleDelete} />
+            <BookCard
+              key={book._id}
+              book={book}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+            />
           ))
         ) : (
           <p className="empty-state">No books found. Add your first book!</p>

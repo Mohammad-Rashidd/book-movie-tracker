@@ -34,6 +34,14 @@
   font-size: 1rem;
   border-radius: 6px;
   border: 1px solid #ccc;
+  transition: all 0.3s;
+}
+
+.books-controls input:focus,
+.books-controls select:focus {
+  outline: none;
+  border-color: #135024;
+  box-shadow: 0 0 5px rgba(19, 80, 36, 0.3);
 }
 
 .add-book-form {
@@ -50,6 +58,14 @@
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.add-book-form input:focus,
+.add-book-form select:focus {
+  outline: none;
+  border-color: #135024;
+  box-shadow: 0 0 5px rgba(19, 80, 36, 0.3);
 }
 
 .add-book-form button {
@@ -65,6 +81,8 @@
 
 .add-book-form button:hover {
   background-color: #1a892d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .book-list {
@@ -77,4 +95,21 @@
   text-align: center;
   color: #888;
   font-size: 1.1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .books-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .add-book-form {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .book-list {
+    grid-template-columns: 1fr;
+  }
 }

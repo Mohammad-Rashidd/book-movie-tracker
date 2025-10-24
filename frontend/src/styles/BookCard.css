@@ -40,9 +40,11 @@
 .status.to-read {
   background-color: #ffa502;
 }
+
 .status.reading {
   background-color: #3742fa;
 }
+
 .status.read {
   background-color: #2ed573;
 }
@@ -63,6 +65,7 @@
   cursor: pointer;
   width: auto; /* fit content */
   white-space: nowrap;
+  transition: all 0.3s;
 }
 
 .delete-btn:hover {
