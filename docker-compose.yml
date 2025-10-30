@@ -19,6 +19,10 @@ services:
     environment:
       - PORT=5000
       - MONGO_URI=mongodb://mongo:27017/moviebooktracker
+      - MONGO_URI_LOCAL=mongodb://mongo:27017/moviebooktracker
+      - MONGO_URI_CLOUD=mongodb+srv://Achi:Achi%40123@cluster0.suzhbmy.mongodb.net/moviebooktracker?retryWrites=true&w=majority
+      - JWT_SECRET=4b7f8e9c2a1d5f0b9c3e6d7a8f2b1c0d
+      - NODE_ENV=development
     depends_on:
       - mongo
   frontend:
